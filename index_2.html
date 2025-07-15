@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Automatiza y Crea con IA | Empresa X</title>
+		<!-- Tailwind CSS CDN -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<!-- Material Icons -->
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<!-- GSAP CDN -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+	</head>
+	<body class="text-gray-800 antialiased scroll-smooth">
+		<!-- Hero -->
+		<section
+			id="hero"
+			class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-indigo-600 to-purple-700 text-white text-center px-6"
+		>
+			<nav
+				class="absolute top-0 left-0 w-full flex items-center justify-between p-4"
+			>
+				<span class="font-bold text-xl">Empresa X</span>
+				<a
+					href="#contacto"
+					class="bg-white text-indigo-600 font-semibold px-4 py-2 rounded-full shadow-lg hover:bg-indigo-100 transition"
+					>Agenda demo</a
+				>
+			</nav>
+
+			<h1 class="text-4xl md:text-6xl font-extrabold mb-4 fade-in">
+				Automatiza tus procesos<br />y crea contenido con IA
+			</h1>
+			<p class="text-lg md:text-2xl mb-8 fade-in">
+				Reduce tareas manuales hasta un 70&nbsp;% y genera posts de alto impacto
+				en segundos.
+			</p>
+			<a
+				href="#contacto"
+				class="bg-white text-indigo-700 font-semibold px-6 py-3 rounded-full shadow-xl fade-in hover:bg-indigo-100 transition"
+				>Solicitar demo gratuita</a
+			>
+			<div class="mt-10 fade-in">
+				<img
+					src="https://placehold.co/600x400?text=Mockup+Dashboard"
+					alt="Mockup plataforma"
+					class="mx-auto rounded-2xl shadow-2xl"
+				/>
+			</div>
+		</section>
+
+		<!-- Pain-Relief -->
+		<section id="problema" class="py-20 bg-white">
+			<div
+				class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"
+			>
+				<div>
+					<h2 class="text-3xl font-bold mb-4">
+						¿Aún dependes de procesos manuales?
+					</h2>
+					<p class="mb-6">
+						Las empresas pierden en promedio
+						<span class="font-semibold">20 horas/semana</span> en tareas
+						repetitivas. Nuestro motor de automatización elimina cuellos de
+						botella y libera a tu equipo para tareas estratégicas.
+					</p>
+					<ul class="space-y-2">
+						<li class="flex items-start">
+							<span class="material-icons mr-2 text-indigo-600">bolt</span>
+							<span>Flujos 100&nbsp;% personalizables</span>
+						</li>
+						<li class="flex items-start">
+							<span class="material-icons mr-2 text-indigo-600">schedule</span>
+							<span>Ejecuciones en tiempo real</span>
+						</li>
+						<li class="flex items-start">
+							<span class="material-icons mr-2 text-indigo-600">insights</span>
+							<span>Métricas de eficiencia integradas</span>
+						</li>
+					</ul>
+				</div>
+				<img
+					src="https://placehold.co/500x500?text=Automatización"
+					alt="Automatización ilustración"
+					class="rounded-2xl shadow-xl"
+				/>
+			</div>
+		</section>
+
+		<!-- Features -->
+		<section id="features" class="py-20 bg-gray-50">
+			<div class="max-w-6xl mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-12">
+					Todo lo que necesitas en una sola plataforma
+				</h2>
+				<div class="grid md:grid-cols-3 gap-8">
+					<div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+						<span class="material-icons text-4xl text-indigo-600 mb-4"
+							>auto_graph</span
+						>
+						<h3 class="text-xl font-semibold mb-2">Flujos de automatización</h3>
+						<p>
+							Arrastra y suelta bloques para crear procesos sin una sola línea
+							de código.
+						</p>
+					</div>
+					<div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+						<span class="material-icons text-4xl text-indigo-600 mb-4"
+							>edit</span
+						>
+						<h3 class="text-xl font-semibold mb-2">
+							Generador de contenido IA
+						</h3>
+						<p>
+							Ideas, copies y creatividades optimizadas para cada red social con
+							un clic.
+						</p>
+					</div>
+					<div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+						<span class="material-icons text-4xl text-indigo-600 mb-4"
+							>hub</span
+						>
+						<h3 class="text-xl font-semibold mb-2">Integraciones +100</h3>
+						<p>
+							Conecta tus herramientas favoritas: CRM, ERP, Slack, WhatsApp y
+							más.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Benefits -->
+		<section id="beneficios" class="py-20 bg-white">
+			<div class="max-w-6xl mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-12">
+					Resultados que hablan por sí mismos
+				</h2>
+				<div class="grid md:grid-cols-3 gap-8 text-center">
+					<div class="p-6">
+						<span
+							class="text-5xl font-extrabold text-indigo-600 counter"
+							data-target="70"
+							>0%</span
+						>
+						<p class="mt-2">Reducción promedio de tareas manuales</p>
+					</div>
+					<div class="p-6">
+						<span
+							class="text-5xl font-extrabold text-indigo-600 counter"
+							data-target="5"
+							>0x</span
+						>
+						<p class="mt-2">Mayor velocidad de publicación en redes</p>
+					</div>
+					<div class="p-6">
+						<span
+							class="text-5xl font-extrabold text-indigo-600 counter"
+							data-target="120"
+							>0+</span
+						>
+						<p class="mt-2">Clientes confían en nosotros</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Social Proof -->
+		<section id="testimonios" class="py-20 bg-gray-50">
+			<div class="max-w-5xl mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-12">
+					Ellos ya dan el siguiente paso
+				</h2>
+				<div class="relative overflow-hidden">
+					<div id="carousel" class="flex space-x-8">
+						<!-- Testimonial card -->
+						<div class="bg-white p-8 rounded-2xl shadow-lg w-80 shrink-0">
+							<p class="italic mb-4">
+								“Ahora nuestro equipo de marketing dedica más tiempo a la
+								estrategia y menos al copy-paste.”
+							</p>
+							<div class="flex items-center">
+								<img
+									src="https://placehold.co/48x48"
+									alt="Avatar"
+									class="w-12 h-12 rounded-full mr-3"
+								/>
+								<div>
+									<p class="font-semibold">Ana López</p>
+									<p class="text-sm text-gray-500">CMO, TechSoft</p>
+								</div>
+							</div>
+						</div>
+						<!-- Repite más tarjetas según sea necesario -->
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Process -->
+		<section id="proceso" class="py-20 bg-white">
+			<div class="max-w-4xl mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-12">¿Cómo trabajamos?</h2>
+				<ol class="relative border-l border-indigo-200">
+					<li class="mb-10 ml-6">
+						<span
+							class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full"
+						></span>
+						<h3 class="text-lg font-semibold">Diagnóstico gratuito</h3>
+						<p class="text-gray-500">
+							Identificamos procesos susceptibles de automatización y
+							oportunidades de crecimiento.
+						</p>
+					</li>
+					<li class="mb-10 ml-6">
+						<span
+							class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full"
+						></span>
+						<h3 class="text-lg font-semibold">Implementación Agile</h3>
+						<p class="text-gray-500">
+							Desplegamos flujos en sprints semanales para resultados rápidos.
+						</p>
+					</li>
+					<li class="ml-6">
+						<span
+							class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full"
+						></span>
+						<h3 class="text-lg font-semibold">Acompañamiento y optimización</h3>
+						<p class="text-gray-500">
+							Medimos, iteramos y mejoramos de forma continua.
+						</p>
+					</li>
+				</ol>
+			</div>
+		</section>
+
+		<!-- FAQ -->
+		<section id="faq" class="py-20 bg-gray-50">
+			<div class="max-w-4xl mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-12">
+					Preguntas frecuentes
+				</h2>
+				<div class="space-y-4">
+					<details class="bg-white p-4 rounded-lg shadow">
+						<summary class="cursor-pointer font-semibold">
+							¿Cuánto tiempo tarda la implementación?
+						</summary>
+						<p class="mt-2 text-gray-600">
+							Dependiendo del alcance, entre 2 y 6 semanas para la primera
+							versión operativa.
+						</p>
+					</details>
+					<details class="bg-white p-4 rounded-lg shadow">
+						<summary class="cursor-pointer font-semibold">
+							¿Necesito conocimientos técnicos?
+						</summary>
+						<p class="mt-2 text-gray-600">
+							No. Nuestra interfaz no-code permite crear flujos con drag & drop.
+						</p>
+					</details>
+					<details class="bg-white p-4 rounded-lg shadow">
+						<summary class="cursor-pointer font-semibold">
+							¿El generador de contenido usa mis datos?
+						</summary>
+						<p class="mt-2 text-gray-600">
+							Solo con tu autorización. Respetamos tu privacidad y cumplimos
+							GDPR.
+						</p>
+					</details>
+				</div>
+			</div>
+		</section>
+
+		<!-- Secondary CTA -->
+		<section
+			id="cta"
+			class="py-16 bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center"
+		>
+			<h2 class="text-3xl font-bold mb-4">¿Listo para automatizar y crecer?</h2>
+			<a
+				href="#contacto"
+				class="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-indigo-100 transition"
+				>Agenda tu demo hoy</a
+			>
+		</section>
+
+		<!-- Footer -->
+		<footer id="contacto" class="bg-gray-900 text-gray-200 py-12">
+			<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+				<div>
+					<h3 class="font-semibold mb-4">Empresa X</h3>
+					<p class="text-sm">
+						Automatización y generación de contenido con IA.
+					</p>
+				</div>
+				<div>
+					<h3 class="font-semibold mb-4">Contacto</h3>
+					<ul class="text-sm space-y-2">
+						<li>📞 +52 81 1234 5678</li>
+						<li>✉️ hola@empresax.com</li>
+						<li>📍 Monterrey, MX</li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="font-semibold mb-4">Síguenos</h3>
+					<ul class="flex space-x-4">
+						<li>
+							<a href="#" aria-label="LinkedIn" class="hover:text-white"
+								>LinkedIn</a
+							>
+						</li>
+						<li>
+							<a href="#" aria-label="Twitter" class="hover:text-white"
+								>Twitter</a
+							>
+						</li>
+						<li>
+							<a href="#" aria-label="Facebook" class="hover:text-white"
+								>Facebook</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<p class="text-center text-xs mt-8">
+				&copy; 2025 Empresa X — Todos los derechos reservados.
+			</p>
+		</footer>
+
+		<!-- GSAP Animations -->
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				// Hero fade-in
+				gsap.from(".fade-in", {
+					opacity: 0,
+					y: -20,
+					duration: 1,
+					stagger: 0.2,
+				});
+
+				// Benefit counters animation
+				const counters = document.querySelectorAll(".counter");
+				counters.forEach((counter) => {
+					const updateCount = () => {
+						const target = +counter.getAttribute("data-target");
+						const count = +counter.innerText.replace(/[^0-9]/g, "");
+						const increment = target / 100;
+						if (count < target) {
+							counter.innerText =
+								Math.ceil(count + increment) +
+								(counter.dataset.target.includes("%")
+									? "%"
+									: counter.dataset.target.includes("x")
+									? "x"
+									: "+");
+							setTimeout(updateCount, 20);
+						} else {
+							counter.innerText =
+								target +
+								(counter.dataset.target.includes("%")
+									? "%"
+									: counter.dataset.target.includes("x")
+									? "x"
+									: "+");
+						}
+					};
+					updateCount();
+				});
+
+				// Testimonial carousel infinite scroll
+				const carousel = document.getElementById("carousel");
+				gsap.to(carousel, {
+					xPercent: -50,
+					repeat: -1,
+					ease: "none",
+					duration: 30,
+				});
+			});
+		</script>
+	</body>
+</html>
