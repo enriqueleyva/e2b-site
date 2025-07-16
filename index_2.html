@@ -2,383 +2,559 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Automatiza y Crea con IA | Empresa X</title>
-		<!-- Tailwind CSS CDN -->
-		<script src="https://cdn.tailwindcss.com"></script>
-		<!-- Material Icons -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Software Dev One-Page • Bootstrap</title>
+
+		<!-- Bootstrap 5 -->
 		<link
-			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 			rel="stylesheet"
 		/>
-		<!-- GSAP CDN -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		></script>
+
+		<!-- Prism -->
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/prismjs/themes/prism-tomorrow.css"
+		/>
+		<script
+			defer
+			src="https://unpkg.com/prismjs/components/prism-core.min.js"
+		></script>
+		<script
+			defer
+			src="https://unpkg.com/prismjs/components/prism-clike.min.js"
+		></script>
+		<script
+			defer
+			src="https://unpkg.com/prismjs/components/prism-javascript.min.js"
+		></script>
+
+		<!-- GSAP -->
+		<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+		<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+		<script src="https://unpkg.com/gsap@3/dist/TextPlugin.min.js"></script>
+
+		<!-- 🔧  CSS personalizado -->
+		<style>
+			:root {
+				--clr-teal: #14b8a6;
+				--clr-bg: #0f172a;
+			}
+
+			body {
+				background: #0c0c0c;
+				color: #e5e7eb;
+				cursor: url("/assets/cursor-code.png"), auto;
+			}
+			section {
+				padding-block: 6rem;
+			}
+
+			/* --- glitch hover del logo --- */
+			.glitch {
+				position: relative;
+			}
+			.glitch::before,
+			.glitch::after {
+				content: attr(data-glitch);
+				position: absolute;
+				inset: 0;
+				mix-blend-mode: screen;
+				opacity: 0;
+				pointer-events: none;
+			}
+			.glitch:hover::before {
+				color: #00f;
+				transform: translate(2px, -2px);
+				opacity: 0.7;
+			}
+			.glitch:hover::after {
+				color: #f00;
+				transform: translate(-2px, 2px);
+				opacity: 0.7;
+			}
+
+			/* --- código flotante --- */
+			#hero {
+				position: relative;
+				min-height: 100vh;
+				background: var(--clr-bg);
+				perspective: 1000px;
+				overflow: hidden;
+			}
+			.code-layer span {
+				position: absolute;
+				font-family: monospace;
+				opacity: 0.1;
+				color: var(--clr-teal);
+				user-select: none;
+			}
+
+			/* --- heading sticky / scroll words --- */
+			#scroll-words {
+				position: relative;
+				min-height: 300vh;
+				display: flex;
+				align-items: start;
+			}
+			#sticky-title {
+				position: sticky;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			#word-active {
+				background: linear-gradient(90deg, #fff 0%, #00ffa2 70%);
+				-webkit-background-clip: text;
+				color: transparent;
+				transition: background 0.4s;
+			}
+			/* ocultamos el li activo (aunque la lista ya no se ve) */
+			#word-list li {
+				color: #63718444;
+				transition: 0.3s;
+			}
+			#word-list li.is-active {
+				opacity: 0;
+				pointer-events: none;
+			}
+
+			/* --- terminal / flip / other blocks usan Bootstrap utilidades --- */
+			#terminal {
+				background: rgba(0, 0, 0, 0.8);
+				height: 16rem;
+				border-radius: 0.5rem;
+				overflow-y: auto;
+				padding: 1rem;
+				font-family: monospace;
+				color: #22c55e;
+			}
+			/* flip card */
+			.flip {
+				perspective: 1000px;
+			}
+			.flip-inner {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				transition: transform 0.7s;
+				transform-style: preserve-3d;
+			}
+			.flip:hover .flip-inner {
+				transform: rotateY(180deg);
+			}
+			.flip-front,
+			.flip-back {
+				position: absolute;
+				inset: 0;
+				border: 1px solid var(--clr-teal);
+				border-radius: 0.75rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				backface-visibility: hidden;
+				padding: 1.5rem;
+			}
+			.flip-front {
+				background: #1e293b;
+			}
+			.flip-back {
+				background: #0f172a;
+				transform: rotateY(180deg);
+			}
+
+			/* ticker clientes */
+			#logo-track img {
+				height: 3rem;
+				width: auto;
+			}
+
+			/* compiling bar */
+			#compile-bar {
+				white-space: pre-wrap;
+				color: #22c55e;
+				font-family: monospace;
+			}
+
+			@keyframes pulse {
+				50% {
+					opacity: 0.4;
+				}
+			}
+		</style>
 	</head>
-	<body class="text-gray-800 antialiased scroll-smooth">
-		<!-- Hero -->
+
+	<body class="text-light">
+		<!-- ============ HERO ============ -->
 		<section
 			id="hero"
-			class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-indigo-600 to-purple-700 text-white text-center px-6"
+			class="d-flex flex-column align-items-center justify-content-center text-center"
 		>
-			<nav
-				class="absolute top-0 left-0 w-full flex items-center justify-between p-4"
+			<!-- capas flotantes -->
+			<div
+				class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none"
 			>
-				<span class="font-bold text-xl">Empresa X</span>
+				<div class="code-layer layer-1 position-absolute inset-0"></div>
+				<div class="code-layer layer-2 position-absolute inset-0"></div>
+			</div>
+
+			<div class="position-relative z-2 container">
+				<img
+					src="img/logoL.png"
+					alt="Logo"
+					data-glitch
+					class="glitch d-block mx-auto mb-4"
+					style="width: 15rem"
+				/>
+				<h1 class="fw-bold display-5">
+					<span id="typewriter"></span>
+					<span
+						class="d-inline-block ms-1 bg-danger"
+						style="width: 3px; height: 1em; animation: pulse 1s infinite"
+					></span>
+				</h1>
+				<p class="lead opacity-75 mx-auto" style="max-width: 40rem">
+					Desarrollo de software a la medida. Creamos productos digitales
+					escalables y de alto impacto.
+				</p>
 				<a
 					href="#contacto"
-					class="bg-white text-indigo-600 font-semibold px-4 py-2 rounded-full shadow-lg hover:bg-indigo-100 transition"
-					>Agenda demo</a
+					class="btn btn-lg text-light"
+					style="background: var(--clr-teal)"
+					>Solicita una consulta</a
 				>
-			</nav>
+			</div>
+		</section>
 
-			<h1 class="text-4xl md:text-6xl font-extrabold mb-4 fade-in">
-				Automatiza tus procesos<br />y crea contenido con IA
-			</h1>
-			<p class="text-lg md:text-2xl mb-8 fade-in">
-				Reduce tareas manuales hasta un 70&nbsp;% y genera posts de alto impacto
-				en segundos.
-			</p>
-			<a
-				href="#contacto"
-				class="bg-white text-indigo-700 font-semibold px-6 py-3 rounded-full shadow-xl fade-in hover:bg-indigo-100 transition"
-				>Solicitar demo gratuita</a
+		<!-- ============ YOU CAN SCROLL ============ -->
+		<section
+			id="scroll-words"
+			class="mb-5"
+			style="min-height: 300vh; margin-bottom: 35vh"
+		>
+			<h2
+				id="sticky-title"
+				class="w-100 px-4 fw-extrabold lh-1 d-flex align-items-baseline gap-3 flex-nowrap"
+				style="font-size: clamp(2.5rem, 8vw, 11vw)"
 			>
-			<div class="mt-10 fade-in">
-				<img
-					src="https://placehold.co/600x400?text=Mockup+Dashboard"
-					alt="Mockup plataforma"
-					class="mx-auto rounded-2xl shadow-2xl"
-				/>
-			</div>
+				<span class="text-white-50">Tu&nbsp;puedes</span>
+				<span id="word-active">design.</span>
+			</h2>
 		</section>
 
-		<!-- Pain-Relief -->
-		<section id="problema" class="py-20 bg-white">
-			<div
-				class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"
-			>
-				<div>
-					<h2 class="text-3xl font-bold mb-4">
-						¿Aún dependes de procesos manuales?
-					</h2>
-					<p class="mb-6">
-						Las empresas pierden en promedio
-						<span class="font-semibold">20 horas/semana</span> en tareas
-						repetitivas. Nuestro motor de automatización elimina cuellos de
-						botella y libera a tu equipo para tareas estratégicas.
-					</p>
-					<ul class="space-y-2">
-						<li class="flex items-start">
-							<span class="material-icons mr-2 text-indigo-600">bolt</span>
-							<span>Flujos 100&nbsp;% personalizables</span>
-						</li>
-						<li class="flex items-start">
-							<span class="material-icons mr-2 text-indigo-600">schedule</span>
-							<span>Ejecuciones en tiempo real</span>
-						</li>
-						<li class="flex items-start">
-							<span class="material-icons mr-2 text-indigo-600">insights</span>
-							<span>Métricas de eficiencia integradas</span>
-						</li>
-					</ul>
-				</div>
-				<img
-					src="https://placehold.co/500x500?text=Automatización"
-					alt="Automatización ilustración"
-					class="rounded-2xl shadow-xl"
-				/>
-			</div>
-		</section>
-
-		<!-- Features -->
-		<section id="features" class="py-20 bg-gray-50">
-			<div class="max-w-6xl mx-auto px-6">
-				<h2 class="text-3xl font-bold text-center mb-12">
-					Todo lo que necesitas en una sola plataforma
-				</h2>
-				<div class="grid md:grid-cols-3 gap-8">
-					<div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-						<span class="material-icons text-4xl text-indigo-600 mb-4"
-							>auto_graph</span
-						>
-						<h3 class="text-xl font-semibold mb-2">Flujos de automatización</h3>
-						<p>
-							Arrastra y suelta bloques para crear procesos sin una sola línea
-							de código.
-						</p>
-					</div>
-					<div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-						<span class="material-icons text-4xl text-indigo-600 mb-4"
-							>edit</span
-						>
-						<h3 class="text-xl font-semibold mb-2">
-							Generador de contenido IA
-						</h3>
-						<p>
-							Ideas, copies y creatividades optimizadas para cada red social con
-							un clic.
-						</p>
-					</div>
-					<div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-						<span class="material-icons text-4xl text-indigo-600 mb-4"
-							>hub</span
-						>
-						<h3 class="text-xl font-semibold mb-2">Integraciones +100</h3>
-						<p>
-							Conecta tus herramientas favoritas: CRM, ERP, Slack, WhatsApp y
-							más.
-						</p>
-					</div>
+		<!-- ============ NOSOTROS ============ -->
+		<section id="nosotros" class="bg-dark py-5">
+			<div class="container">
+				<h2 class="text-info display-6 mb-4">/ Nosotros</h2>
+				<div id="terminal">
+					&gt; Escribe <code>help</code> y presiona Enter<br /><span
+						class="blinker"
+						>_</span
+					>
 				</div>
 			</div>
 		</section>
 
-		<!-- Benefits -->
-		<section id="beneficios" class="py-20 bg-white">
-			<div class="max-w-6xl mx-auto px-6">
-				<h2 class="text-3xl font-bold text-center mb-12">
-					Resultados que hablan por sí mismos
-				</h2>
-				<div class="grid md:grid-cols-3 gap-8 text-center">
-					<div class="p-6">
-						<span
-							class="text-5xl font-extrabold text-indigo-600 counter"
-							data-target="70"
-							>0%</span
-						>
-						<p class="mt-2">Reducción promedio de tareas manuales</p>
-					</div>
-					<div class="p-6">
-						<span
-							class="text-5xl font-extrabold text-indigo-600 counter"
-							data-target="5"
-							>0x</span
-						>
-						<p class="mt-2">Mayor velocidad de publicación en redes</p>
-					</div>
-					<div class="p-6">
-						<span
-							class="text-5xl font-extrabold text-indigo-600 counter"
-							data-target="120"
-							>0+</span
-						>
-						<p class="mt-2">Clientes confían en nosotros</p>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Social Proof -->
-		<section id="testimonios" class="py-20 bg-gray-50">
-			<div class="max-w-5xl mx-auto px-6">
-				<h2 class="text-3xl font-bold text-center mb-12">
-					Ellos ya dan el siguiente paso
-				</h2>
-				<div class="relative overflow-hidden">
-					<div id="carousel" class="flex space-x-8">
-						<!-- Testimonial card -->
-						<div class="bg-white p-8 rounded-2xl shadow-lg w-80 shrink-0">
-							<p class="italic mb-4">
-								“Ahora nuestro equipo de marketing dedica más tiempo a la
-								estrategia y menos al copy-paste.”
-							</p>
-							<div class="flex items-center">
-								<img
-									src="https://placehold.co/48x48"
-									alt="Avatar"
-									class="w-12 h-12 rounded-full mr-3"
-								/>
-								<div>
-									<p class="font-semibold">Ana López</p>
-									<p class="text-sm text-gray-500">CMO, TechSoft</p>
+		<!-- ============ SERVICIOS ============ -->
+		<section id="servicios" class="py-5" style="background: #0f172a">
+			<div class="container">
+				<h2 class="text-info display-6 text-center mb-5">/ Servicios</h2>
+				<div class="row g-4">
+					<div class="col-md-4">
+						<div class="flip h-100">
+							<div class="flip-inner">
+								<div class="flip-front text-center">
+									<h3 class="h5 fw-semibold mb-3">Aplicaciones Web</h3>
+									<p class="opacity-75">
+										Full-stack con performance y seguridad.
+									</p>
+								</div>
+								<div class="flip-back">
+									<pre class="language-js m-0"><code>
+// Express.js
+app.get('/',(req,res)=>{
+  res.json({msg:'Hello - world'});
+});
+</code></pre>
 								</div>
 							</div>
 						</div>
-						<!-- Repite más tarjetas según sea necesario -->
+					</div>
+					<!-- …duplica más cards si lo necesitas… -->
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ CLIENTES (Ticker) ============ -->
+		<section id="clientes" class="bg-dark py-5">
+			<div class="container text-center">
+				<h2 class="text-info display-6 mb-4">
+					/ Clientes que confían en nosotros
+				</h2>
+				<div class="overflow-hidden mt-4">
+					<div id="logo-track" class="d-flex align-items-center gap-5">
+						<img
+							src="https://cdn.prod.website-files.com/62b4e3084bb69b3cbd747e80/633b2f78bbd2b43834df6ca9_gmx.png"
+							alt=""
+						/>
+						<img
+							src="https://cdn.prod.website-files.com/62b4e3084bb69b3cbd747e80/633b2f78bbd2b43834df6ca9_gmx.png"
+							alt=""
+						/>
+						<img
+							src="https://cdn.prod.website-files.com/62b4e3084bb69b3cbd747e80/633b2f78bbd2b43834df6ca9_gmx.png"
+							alt=""
+						/>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<!-- Process -->
-		<section id="proceso" class="py-20 bg-white">
-			<div class="max-w-4xl mx-auto px-6">
-				<h2 class="text-3xl font-bold text-center mb-12">¿Cómo trabajamos?</h2>
-				<ol class="relative border-l border-indigo-200">
-					<li class="mb-10 ml-6">
-						<span
-							class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full"
-						></span>
-						<h3 class="text-lg font-semibold">Diagnóstico gratuito</h3>
-						<p class="text-gray-500">
-							Identificamos procesos susceptibles de automatización y
-							oportunidades de crecimiento.
-						</p>
-					</li>
-					<li class="mb-10 ml-6">
-						<span
-							class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full"
-						></span>
-						<h3 class="text-lg font-semibold">Implementación Agile</h3>
-						<p class="text-gray-500">
-							Desplegamos flujos en sprints semanales para resultados rápidos.
-						</p>
-					</li>
-					<li class="ml-6">
-						<span
-							class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-indigo-600 rounded-full"
-						></span>
-						<h3 class="text-lg font-semibold">Acompañamiento y optimización</h3>
-						<p class="text-gray-500">
-							Medimos, iteramos y mejoramos de forma continua.
-						</p>
-					</li>
-				</ol>
+		<!-- ============ CONTACTO ============ -->
+		<section id="contacto" class="bg-dark py-5">
+			<div class="container" style="max-width: 32rem">
+				<h2 class="text-info display-6 text-center mb-4">/ Contacto</h2>
+				<form id="contact-form" class="vstack gap-3">
+					<div>
+						<label class="form-label">Nombre</label>
+						<input
+							required
+							name="name"
+							class="form-control bg-secondary border-0 text-light"
+						/>
+					</div>
+					<div>
+						<label class="form-label">Correo</label>
+						<input
+							type="email"
+							required
+							name="email"
+							class="form-control bg-secondary border-0 text-light"
+						/>
+					</div>
+					<div>
+						<label class="form-label">Mensaje</label>
+						<textarea
+							rows="4"
+							required
+							name="message"
+							class="form-control bg-secondary border-0 text-light"
+						></textarea>
+					</div>
+					<button
+						class="btn text-light w-100"
+						style="background: var(--clr-teal)"
+					>
+						Enviar
+					</button>
+				</form>
+				<pre id="compile-bar" class="mt-3 d-none"></pre>
 			</div>
 		</section>
 
-		<!-- FAQ -->
-		<section id="faq" class="py-20 bg-gray-50">
-			<div class="max-w-4xl mx-auto px-6">
-				<h2 class="text-3xl font-bold text-center mb-12">
-					Preguntas frecuentes
-				</h2>
-				<div class="space-y-4">
-					<details class="bg-white p-4 rounded-lg shadow">
-						<summary class="cursor-pointer font-semibold">
-							¿Cuánto tiempo tarda la implementación?
-						</summary>
-						<p class="mt-2 text-gray-600">
-							Dependiendo del alcance, entre 2 y 6 semanas para la primera
-							versión operativa.
-						</p>
-					</details>
-					<details class="bg-white p-4 rounded-lg shadow">
-						<summary class="cursor-pointer font-semibold">
-							¿Necesito conocimientos técnicos?
-						</summary>
-						<p class="mt-2 text-gray-600">
-							No. Nuestra interfaz no-code permite crear flujos con drag & drop.
-						</p>
-					</details>
-					<details class="bg-white p-4 rounded-lg shadow">
-						<summary class="cursor-pointer font-semibold">
-							¿El generador de contenido usa mis datos?
-						</summary>
-						<p class="mt-2 text-gray-600">
-							Solo con tu autorización. Respetamos tu privacidad y cumplimos
-							GDPR.
-						</p>
-					</details>
-				</div>
-			</div>
-		</section>
-
-		<!-- Secondary CTA -->
-		<section
-			id="cta"
-			class="py-16 bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center"
-		>
-			<h2 class="text-3xl font-bold mb-4">¿Listo para automatizar y crecer?</h2>
-			<a
-				href="#contacto"
-				class="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-indigo-100 transition"
-				>Agenda tu demo hoy</a
-			>
-		</section>
-
-		<!-- Footer -->
-		<footer id="contacto" class="bg-gray-900 text-gray-200 py-12">
-			<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-				<div>
-					<h3 class="font-semibold mb-4">Empresa X</h3>
-					<p class="text-sm">
-						Automatización y generación de contenido con IA.
-					</p>
-				</div>
-				<div>
-					<h3 class="font-semibold mb-4">Contacto</h3>
-					<ul class="text-sm space-y-2">
-						<li>📞 +52 81 1234 5678</li>
-						<li>✉️ hola@empresax.com</li>
-						<li>📍 Monterrey, MX</li>
-					</ul>
-				</div>
-				<div>
-					<h3 class="font-semibold mb-4">Síguenos</h3>
-					<ul class="flex space-x-4">
-						<li>
-							<a href="#" aria-label="LinkedIn" class="hover:text-white"
-								>LinkedIn</a
-							>
-						</li>
-						<li>
-							<a href="#" aria-label="Twitter" class="hover:text-white"
-								>Twitter</a
-							>
-						</li>
-						<li>
-							<a href="#" aria-label="Facebook" class="hover:text-white"
-								>Facebook</a
-							>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<p class="text-center text-xs mt-8">
-				&copy; 2025 Empresa X — Todos los derechos reservados.
-			</p>
-		</footer>
-
-		<!-- GSAP Animations -->
+		<!-- ============ JS / ANIMACIONES ============ -->
 		<script>
-			document.addEventListener("DOMContentLoaded", () => {
-				// Hero fade-in
-				gsap.from(".fade-in", {
-					opacity: 0,
-					y: -20,
-					duration: 1,
-					stagger: 0.2,
-				});
+			/* ---------- Typewriter ---------- */
+			gsap.registerPlugin(TextPlugin);
+			gsap.to("#typewriter", {
+				text: "Impulsamos tu visión digital",
+				duration: 4,
+				ease: "none",
+				repeat: -1,
+				repeatDelay: 2,
+				yoyo: true,
+			});
 
-				// Benefit counters animation
-				const counters = document.querySelectorAll(".counter");
-				counters.forEach((counter) => {
-					const updateCount = () => {
-						const target = +counter.getAttribute("data-target");
-						const count = +counter.innerText.replace(/[^0-9]/g, "");
-						const increment = target / 100;
-						if (count < target) {
-							counter.innerText =
-								Math.ceil(count + increment) +
-								(counter.dataset.target.includes("%")
-									? "%"
-									: counter.dataset.target.includes("x")
-									? "x"
-									: "+");
-							setTimeout(updateCount, 20);
-						} else {
-							counter.innerText =
-								target +
-								(counter.dataset.target.includes("%")
-									? "%"
-									: counter.dataset.target.includes("x")
-									? "x"
-									: "+");
-						}
-					};
-					updateCount();
-				});
-
-				// Testimonial carousel infinite scroll
-				const carousel = document.getElementById("carousel");
-				gsap.to(carousel, {
-					xPercent: -50,
-					repeat: -1,
+			/* ---------- Código flotante ---------- */
+			const chars = [
+				"<",
+				"/",
+				">",
+				"{",
+				"}",
+				"(",
+				")",
+				";",
+				"=",
+				'"',
+				"const",
+				"let",
+				"function",
+				"=>",
+			];
+			function spawn(layerSel, density = 50) {
+				const layer = document.querySelector(layerSel);
+				const frag = document.createDocumentFragment();
+				for (let i = 0; i < density; i++) {
+					const s = document.createElement("span");
+					s.textContent = chars[(Math.random() * chars.length) | 0];
+					s.style.transform = `translate(${Math.random() * 100}vw,${
+						Math.random() * 100
+					}vh)`;
+					frag.appendChild(s);
+				}
+				layer.appendChild(frag);
+			}
+			spawn(".layer-1", 60);
+			spawn(".layer-2", 40);
+			gsap.utils.toArray(".code-layer").forEach((l, i) => {
+				gsap.to(l, {
+					yPercent: (i + 1) * 12,
 					ease: "none",
-					duration: 30,
+					scrollTrigger: { trigger: l, start: "top bottom", scrub: 1 },
 				});
 			});
+			document.addEventListener("mousemove", (e) => {
+				const x = (e.clientX / window.innerWidth - 0.5) * 15,
+					y = (e.clientY / window.innerHeight - 0.5) * 15;
+				gsap.to(".code-layer", {
+					rotateY: x,
+					rotateX: -y,
+					duration: 0.6,
+					ease: "power3.out",
+				});
+			});
+
+			/* ---------- Glitch mini-anim ---------- */
+			document.querySelectorAll(".glitch").forEach((el) => {
+				el.dataset.glitch = "";
+				const tl = gsap
+					.timeline({ paused: true })
+					.to(el, { x: 2, y: -2, duration: 0.02, repeat: 5, yoyo: true });
+				el.addEventListener("mouseenter", () => tl.restart());
+			});
+
+			/* ---------- Terminal ---------- */
+			const term = document.getElementById("terminal");
+			let prompt = document.createElement("div");
+			prompt.textContent = "> ";
+			term.appendChild(prompt);
+			document.addEventListener("keydown", (e) => {
+				if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName))
+					return;
+				if (e.key === "Backspace") {
+					prompt.textContent = prompt.textContent.slice(0, -1);
+				} else if (e.key === "Enter") {
+					const cmd = prompt.textContent.replace("> ", "").trim();
+					exec(cmd);
+					prompt = document.createElement("div");
+					prompt.textContent = "> ";
+					term.appendChild(prompt);
+					term.scrollTop = term.scrollHeight;
+				} else if (e.key.length === 1) {
+					prompt.textContent += e.key;
+				}
+			});
+			function exec(cmd) {
+				const o = document.createElement("div");
+				switch (cmd) {
+					case "help":
+						o.textContent = "Comandos: help | stack | years | clear";
+						break;
+					case "stack":
+						o.textContent = "Node, React, Vue, Go, AWS, Docker";
+						break;
+					case "years":
+						o.textContent = "8+ años de experiencia";
+						break;
+					case "clear":
+						term.innerHTML = "";
+						return;
+					default:
+						o.textContent = `Comando no encontrado: ${cmd}`;
+				}
+				term.appendChild(o);
+			}
+
+			/* ---------- Flip card: highlight ---------- */
+			document
+				.querySelectorAll(".flip")
+				.forEach((c) =>
+					c.addEventListener("mouseenter", () => Prism.highlightAll())
+				);
+
+			/* ---------- Compiling bar ---------- */
+			const form = document.getElementById("contact-form"),
+				bar = document.getElementById("compile-bar");
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+				form.classList.add("opacity-50", "pe-none");
+				bar.classList.remove("d-none");
+				let p = 0;
+				const id = setInterval(() => {
+					p += 4;
+					bar.textContent = `[${"=".repeat(p / 4)}${" ".repeat(
+						25 - p / 4
+					)}] compiling…`;
+					if (p >= 100) {
+						clearInterval(id);
+						bar.textContent = "[=========================] ✔ enviado!";
+					}
+				}, 120);
+			});
+
+			/* ---------- Ticker clientes ---------- */
+			const track = document.getElementById("logo-track");
+			track.innerHTML += track.innerHTML;
+			gsap.to(track, {
+				x: () => -track.scrollWidth / 2,
+				duration: 25,
+				ease: "none",
+				repeat: -1,
+			});
+			gsap.from(track, {
+				opacity: 0,
+				duration: 0.8,
+				ease: "power2.out",
+				scrollTrigger: { trigger: "#clientes", start: "top 80%", once: true },
+			});
+
+			/* ---------- Scroll words (sin lista visible) ---------- */
+			const verbs = [
+				"design.",
+				"prototype.",
+				"solve.",
+				"build.",
+				"develop.",
+				"debug.",
+				"learn.",
+				"ship.",
+				"collaborate.",
+				"create.",
+				"inspire.",
+				"innovate.",
+				"test.",
+				"optimize.",
+				"visualize.",
+				"transform.",
+				"scale.",
+				"do it.",
+			];
+			const span = document.getElementById("word-active");
+			const STEP = 0.8,
+				total = (verbs.length - 1) * STEP * 100;
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: "#scroll-words",
+					start: "top top",
+					end: `+=${total}vh`,
+					scrub: true,
+					pin: true,
+					pinSpacing: false,
+				},
+			});
+			verbs.forEach((word) =>
+				tl.to({}, { duration: 1, onStart: () => (span.textContent = word) })
+			);
+
+			/* ---------- Reduce motion ---------- */
+			if (matchMedia("(prefers-reduced-motion:reduce)").matches) {
+				gsap.globalTimeline.timeScale(0);
+			}
 		</script>
 	</body>
 </html>
