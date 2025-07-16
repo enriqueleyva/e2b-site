@@ -63,6 +63,148 @@
 				cursor: url("/assets/cursor-code.png"), auto;
 			}
 		</style>
+
+		<!-- ================= YOU CAN SCROLL (aislado de jh3y) ================= -->
+		<style>
+			/* Variables base del efecto */
+			#scroll-words {
+				--start: 0;
+				--end: 360;
+				--lightness: 75%;
+				--base-chroma: 0.3;
+				width: 100%;
+				color: canvasText;
+			}
+			#scroll-words[data-snap="true"] {
+				scroll-snap-type: y proximity;
+			}
+			#scroll-words .yc-content {
+				display: flex;
+				gap: 2rem;
+				line-height: 1.25;
+				width: 100%;
+				padding-inline: 1.5rem;
+				align-items: flex-start;
+			}
+			@media (min-width: 768px) {
+				#scroll-words .yc-content {
+					padding-inline: 5rem;
+				}
+			}
+			#scroll-words h2 {
+				position: sticky;
+				top: calc(50% - 0.5lh);
+				margin: 0;
+				font-weight: 600;
+				font-size: clamp(2rem, 5vw, 4rem);
+				background: linear-gradient(
+					canvasText 50%,
+					color-mix(in oklch, canvas, canvasText 25%)
+				);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+			}
+			#scroll-words ul {
+				--step: calc((var(--end) - var(--start)) / (var(--count) - 1));
+				font-weight: 600;
+				list-style: none;
+				margin: 0;
+				padding-inline: 0;
+				display: grid;
+				gap: 1lh;
+				font-size: clamp(2.5rem, 8vw, 8rem);
+				line-height: 1;
+			}
+			#scroll-words li {
+				scroll-snap-align: center;
+			}
+			#scroll-words li:not(:last-of-type) {
+				color: oklch(
+					var(--lightness) var(--base-chroma)
+						calc(var(--start) + (var(--step) * var(--i)))
+				);
+			}
+			#scroll-words li:last-of-type {
+				background: linear-gradient(
+					canvasText 50%,
+					color-mix(in oklch, canvas, canvasText 25%)
+				);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+			}
+			/* Animación nativa ligada al scroll (si hay soporte) */
+			@supports (animation-timeline: view()) and (animation-range: 0% 100%) {
+				#scroll-words[data-animate="true"] li {
+					opacity: 0.2;
+					animation-name: yc-brighten;
+					animation-fill-mode: both;
+					animation-timing-function: linear;
+					animation-range: cover calc(50% - 1lh) calc(50% + 1lh);
+					animation-timeline: view();
+				}
+				#scroll-words[data-animate="true"] li:first-of-type {
+					--start-opacity: 1;
+				}
+				#scroll-words[data-animate="true"] li:last-of-type {
+					--brightness: 1;
+					--end-opacity: 1;
+				}
+				@keyframes yc-brighten {
+					0% {
+						opacity: var(--start-opacity, 0.2);
+					}
+					50% {
+						opacity: 1;
+						filter: brightness(var(--brightness, 1.2));
+					}
+					100% {
+						opacity: var(--end-opacity, 0.2);
+					}
+				}
+			}
+			/* Sección fin */
+			#scroll-words .yc-fin-wrap {
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				padding-inline: 1.5rem;
+			}
+			#scroll-words .yc-fin {
+				--font-level: 6;
+				margin: 0;
+				font-weight: 600;
+				font-size: clamp(2rem, 5vw, 4rem);
+				background: linear-gradient(
+					canvasText 50%,
+					color-mix(in oklch, canvas, canvasText 25%)
+				);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+			}
+			/* --- Overrides: colores fijos para cada palabra --- */
+
+			/* 1️⃣ Desactivamos la escala automática existente */
+			#scroll-words .yc-scroll-list li {
+				color: inherit; /* quita oklch calc */
+			}
+
+			/* 2️⃣ Aplicamos un color sólido a cada ítem         */
+			/* Cambia los hex por los que desees                 */
+			#scroll-words .yc-scroll-list li:nth-child(1) {
+				color: #ec4899;
+			} /* innova → rosa fucsia  */
+			#scroll-words .yc-scroll-list li:nth-child(2) {
+				color: #10b981;
+			} /* crea   → verde esmeralda */
+			#scroll-words .yc-scroll-list li:nth-child(3) {
+				color: #38bdf8;
+			} /* automatiza → azul cielo  */
+		</style>
 	</head>
 	<body
 		class="bg-gray-950 text-gray-200 antialiased selection:bg-teal-600 selection:text-white"
@@ -104,6 +246,27 @@
 				</a>
 			</div>
 		</section>
+
+		<!-- ============ YOU CAN SCROLL (jh3y adaptado) ============ -->
+		<section
+			id="scroll-words"
+			class="yc-scroll-wrapper py-32"
+			data-animate="true"
+			data-snap="true"
+		>
+			<div class="yc-content">
+				<h2>
+					<span aria-hidden="true" style="color: aliceblue">puedes&nbsp;</span
+					><span class="sr-only">puedes innova, crea y automatiza.</span>
+				</h2>
+				<ul class="yc-scroll-list" style="--count: 3">
+					<li style="--i: 0; color: #ec4899">innova.</li>
+					<li style="--i: 1; color: #10b981">crea.</li>
+					<li style="--i: 2; color: #38bdf8">automatiza.</li>
+				</ul>
+			</div>
+		</section>
+
 		<!-- ============ NOSOTROS (Terminal) ============ -->
 		<section id="nosotros" class="py-24 bg-gray-950">
 			<div class="container mx-auto max-w-3xl px-6">
@@ -117,6 +280,7 @@
 				</div>
 			</div>
 		</section>
+
 		<!-- ============ SERVICIOS (Flip Cards) ============ -->
 		<section id="servicios" class="py-24 bg-gray-900">
 			<div class="container mx-auto px-6">
@@ -144,12 +308,7 @@
 							>
 								<pre
 									class="language-js text-sm p-4"
-								><code class="language-javascript">
-// Express.js
-app.get('/', (req, res) => {
-  res.json({ msg: 'Hello - world' });
-});
-            </code></pre>
+								><code class="language-javascript">// Express.js\napp.get('/', (req, res) => {\n  res.json({ msg: 'Hello - world' });\n});</code></pre>
 							</div>
 						</div>
 					</div>
@@ -159,6 +318,7 @@ app.get('/', (req, res) => {
 				</div>
 			</div>
 		</section>
+
 		<!-- ============ CLIENTES (Ticker) ============ -->
 		<section id="clientes" class="bg-gray-950 py-24">
 			<div class="max-w-6xl mx-auto px-6 text-center">
@@ -190,6 +350,7 @@ app.get('/', (req, res) => {
 				</div>
 			</div>
 		</section>
+
 		<!-- ============ CONTACTO (Formulario) ============ -->
 		<section id="contacto" class="py-24 bg-gray-950">
 			<div class="container mx-auto max-w-lg px-6">
@@ -240,6 +401,7 @@ app.get('/', (req, res) => {
 				></pre>
 			</div>
 		</section>
+
 		<!-- ============ SCRIPTS ============ -->
 		<script>
 			/* ---------------- Typewriter ---------------- */
