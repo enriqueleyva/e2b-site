@@ -3,587 +3,510 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Software Dev One-Page</title>
+		<title>E2B| Automatización & Desarrollo</title>
 
-		<!-- Tailwind vía CDN (modo play: ideal para prototipo) -->
+		<!-- Tailwind CDN -->
 		<script src="https://cdn.tailwindcss.com"></script>
-
-		<!-- Prism JS para resaltar snippets -->
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/prismjs/themes/prism-tomorrow.css"
-		/>
-		<script
-			defer
-			src="https://unpkg.com/prismjs/components/prism-core.min.js"
-		></script>
-		<script
-			defer
-			src="https://unpkg.com/prismjs/components/prism-clike.min.js"
-		></script>
-		<script
-			defer
-			src="https://unpkg.com/prismjs/components/prism-javascript.min.js"
-		></script>
 
 		<!-- GSAP -->
 		<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 		<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-		<script src="https://unpkg.com/gsap@3/dist/TextPlugin.min.js"></script>
 
+		<!-- Paleta basada en logotipo (ajusta si cambias de logo) -->
 		<style>
-			/* --- Glitch hover para el logo --- */
-			.glitch {
-				position: relative;
+			:root {
+				--primary: #14b8a6; /* teal principal */
+				--secondary: #164e63; /* teal oscuro */
+				--accent: #f59e0b; /* ámbar de apoyo */
 			}
-			.glitch::before,
-			.glitch::after {
-				content: attr(data-glitch);
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				pointer-events: none;
-				mix-blend-mode: screen;
-				opacity: 0;
-			}
-			.glitch:hover::before {
-				color: #00f;
-				transform: translate(2px, -2px);
-				opacity: 0.7;
-			}
-			.glitch:hover::after {
-				color: #f00;
-				transform: translate(-2px, 2px);
-				opacity: 0.7;
-			}
-			/* Cursor personalizado (PNG ~32 px) */
-			body {
-				cursor: url("/assets/cursor-code.png"), auto;
-			}
-		</style>
-
-		<!-- ================= YOU CAN SCROLL (aislado de jh3y) ================= -->
-		<style>
-			/* Variables base del efecto */
-			#scroll-words {
-				--start: 0;
-				--end: 360;
-				--lightness: 75%;
-				--base-chroma: 0.3;
-				width: 100%;
-				color: canvasText;
-			}
-			#scroll-words[data-snap="true"] {
-				scroll-snap-type: y proximity;
-			}
-			#scroll-words .yc-content {
-				display: flex;
-				gap: 2rem;
-				line-height: 1.25;
-				width: 100%;
-				padding-inline: 1.5rem;
-				align-items: flex-start;
-			}
-			@media (min-width: 768px) {
-				#scroll-words .yc-content {
-					padding-inline: 5rem;
+			/* --- Footer: gradiente animado --- */
+			@keyframes gradientShift {
+				0%,
+				100% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: 100% 50%;
 				}
 			}
-			#scroll-words h2 {
-				position: sticky;
-				top: calc(50% - 0.5lh);
-				margin: 0;
-				font-weight: 600;
-				font-size: clamp(2rem, 5vw, 4rem);
-				background: linear-gradient(
-					canvasText 50%,
-					color-mix(in oklch, canvas, canvasText 25%)
-				);
-				-webkit-background-clip: text;
-				background-clip: text;
-				color: transparent;
+			.footer-gradient {
+				background: linear-gradient(120deg, #0f172a, #134e4a, #0f172a);
+				background-size: 200% 200%;
+				animation: gradientShift 15s ease infinite;
 			}
-			#scroll-words ul {
-				--step: calc((var(--end) - var(--start)) / (var(--count) - 1));
-				font-weight: 600;
-				list-style: none;
-				margin: 0;
-				padding-inline: 0;
-				display: grid;
-				gap: 1lh;
-				font-size: clamp(2.5rem, 8vw, 8rem);
-				line-height: 1;
-			}
-			#scroll-words li {
-				scroll-snap-align: center;
-			}
-			#scroll-words li:not(:last-of-type) {
-				color: oklch(
-					var(--lightness) var(--base-chroma)
-						calc(var(--start) + (var(--step) * var(--i)))
-				);
-			}
-			#scroll-words li:last-of-type {
-				background: linear-gradient(
-					canvasText 50%,
-					color-mix(in oklch, canvas, canvasText 25%)
-				);
-				-webkit-background-clip: text;
-				background-clip: text;
-				color: transparent;
-			}
-			/* Animación nativa ligada al scroll (si hay soporte) */
-			@supports (animation-timeline: view()) and (animation-range: 0% 100%) {
-				#scroll-words[data-animate="true"] li {
-					opacity: 0.2;
-					animation-name: yc-brighten;
-					animation-fill-mode: both;
-					animation-timing-function: linear;
-					animation-range: cover calc(50% - 1lh) calc(50% + 1lh);
-					animation-timeline: view();
-				}
-				#scroll-words[data-animate="true"] li:first-of-type {
-					--start-opacity: 1;
-				}
-				#scroll-words[data-animate="true"] li:last-of-type {
-					--brightness: 1;
-					--end-opacity: 1;
-				}
-				@keyframes yc-brighten {
-					0% {
-						opacity: var(--start-opacity, 0.2);
-					}
-					50% {
-						opacity: 1;
-						filter: brightness(var(--brightness, 1.2));
-					}
-					100% {
-						opacity: var(--end-opacity, 0.2);
-					}
-				}
-			}
-			/* Sección fin */
-			#scroll-words .yc-fin-wrap {
-				min-height: 100vh;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 100%;
-				padding-inline: 1.5rem;
-			}
-			#scroll-words .yc-fin {
-				--font-level: 6;
-				margin: 0;
-				font-weight: 600;
-				font-size: clamp(2rem, 5vw, 4rem);
-				background: linear-gradient(
-					canvasText 50%,
-					color-mix(in oklch, canvas, canvasText 25%)
-				);
-				-webkit-background-clip: text;
-				background-clip: text;
-				color: transparent;
-			}
-			/* --- Overrides: colores fijos para cada palabra --- */
-
-			/* 1️⃣ Desactivamos la escala automática existente */
-			#scroll-words .yc-scroll-list li {
-				color: inherit; /* quita oklch calc */
-			}
-
-			/* 2️⃣ Aplicamos un color sólido a cada ítem         */
-			/* Cambia los hex por los que desees                 */
-			#scroll-words .yc-scroll-list li:nth-child(1) {
-				color: #ec4899;
-			} /* innova → rosa fucsia  */
-			#scroll-words .yc-scroll-list li:nth-child(2) {
-				color: #10b981;
-			} /* crea   → verde esmeralda */
-			#scroll-words .yc-scroll-list li:nth-child(3) {
-				color: #38bdf8;
-			} /* automatiza → azul cielo  */
 		</style>
 	</head>
-	<body
-		class="bg-gray-950 text-gray-200 antialiased selection:bg-teal-600 selection:text-white"
-	>
-		<!-- ============ HERO ============ -->
-		<section
-			id="hero"
-			class="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-gray-900 [perspective:1000px]"
+	<body class="bg-slate-950 text-gray-200 antialiased scroll-smooth">
+		<!-- ========== HEADER ==========
+         Menú fijo con CTA y versión mobile
+    -->
+		<header
+			class="fixed w-full bg-slate-950/80 backdrop-blur z-50 shadow-inner"
 		>
-			<!-- Efecto “código flotante” (dos capas) -->
-			<div class="pointer-events-none absolute inset-0">
-				<div class="code-layer layer-1 absolute inset-0"></div>
-				<div class="code-layer layer-2 absolute inset-0"></div>
-			</div>
-
-			<!-- Contenido principal -->
-			<div class="relative z-10 px-4">
-				<!-- Logo con glitch -->
-				<img
-					src="img/logoL.png"
-					alt="Logo"
-					data-glitch=""
-					class="glitch mx-auto w-40 md:w-48 lg:w-60 mb-8 select-none"
-				/>
-				<!-- Typewriter -->
-				<h1 class="text-4xl md:text-6xl font-extrabold text-white">
-					<span id="typewriter"></span
-					><span class="inline-block w-1 bg-teal-400 animate-pulse ml-1"></span>
-				</h1>
-				<p class="mt-6 text-xl opacity-80 max-w-xl mx-auto">
-					Desarrollo de software a la medida. Creamos productos digitales
-					escalables y de alto impacto.
-				</p>
+			<div class="max-w-7xl mx-auto flex items-center justify-between p-4">
+				<a href="#hero" class="flex items-center gap-3">
+					<img src="img/logoL.png" alt="Logo" class="h-10 w-auto select-none" />
+					<!-- <span class="font-bold tracking-wide text-lg"
+						>Nombre&nbsp;Empresa</span
+					> -->
+				</a>
+				<!-- Desktop nav -->
+				<nav class="hidden md:flex gap-8 font-medium">
+					<a href="#servicios" class="hover:text-teal-400 transition"
+						>Servicios</a
+					>
+					<a href="#nosotros" class="hover:text-teal-400 transition"
+						>Nosotros</a
+					>
+					<a href="#portfolio" class="hover:text-teal-400 transition"
+						>Proyectos</a
+					>
+					<a href="#contacto" class="hover:text-teal-400 transition"
+						>Contacto</a
+					>
+				</nav>
 				<a
 					href="#contacto"
-					class="mt-10 inline-block px-8 py-3 bg-teal-500 hover:bg-teal-600 transition rounded-lg shadow-lg font-medium"
+					class="hidden md:inline-block px-5 py-2 bg-teal-500 hover:bg-teal-600 rounded-lg font-semibold shadow-lg transition"
 				>
-					Solicita una consulta
+					Cotiza ahora
 				</a>
-			</div>
-		</section>
-
-		<!-- ============ YOU CAN SCROLL (jh3y adaptado) ============ -->
-		<section
-			id="scroll-words"
-			class="yc-scroll-wrapper py-32"
-			data-animate="true"
-			data-snap="true"
-		>
-			<div class="yc-content">
-				<h2>
-					<span aria-hidden="true" style="color: aliceblue">puedes&nbsp;</span
-					><span class="sr-only">puedes innova, crea y automatiza.</span>
-				</h2>
-				<ul class="yc-scroll-list" style="--count: 3">
-					<li style="--i: 0; color: #ec4899">innova.</li>
-					<li style="--i: 1; color: #10b981">crea.</li>
-					<li style="--i: 2; color: #38bdf8">automatiza.</li>
-				</ul>
-			</div>
-		</section>
-
-		<!-- ============ NOSOTROS (Terminal) ============ -->
-		<section id="nosotros" class="py-24 bg-gray-950">
-			<div class="container mx-auto max-w-3xl px-6">
-				<h2 class="text-3xl font-bold mb-8 text-teal-400">/ Nosotros</h2>
-				<div
-					id="terminal"
-					class="bg-black/80 rounded-lg p-6 font-mono text-green-400 h-64 overflow-y-auto shadow-inner"
+				<!-- Mobile toggler -->
+				<button
+					id="menuBtn"
+					class="md:hidden text-gray-200 focus:outline-none"
+					aria-label="Abrir menú"
 				>
-					<div>> Escribe <code>help</code> y presiona Enter</div>
-					<div class="blinker">_</div>
-				</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16M4 18h16"
+						/>
+					</svg>
+				</button>
 			</div>
+			<!-- Mobile nav -->
+			<div id="mobileMenu" class="hidden md:hidden">
+				<nav class="flex flex-col bg-slate-900 divide-y divide-slate-700">
+					<a href="#servicios" class="p-4">Servicios</a>
+					<a href="#nosotros" class="p-4">Nosotros</a>
+					<a href="#portfolio" class="p-4">Proyectos</a>
+					<a href="#contacto" class="p-4">Contacto</a>
+				</nav>
+			</div>
+		</header>
+
+		<!-- ========== HERO ==========
+         Logo, tagline y CTA principal
+    -->
+		<section
+			id="hero"
+			class="min-h-screen flex flex-col items-center justify-center text-center px-6"
+		>
+			<img
+				src="img/logoL.png"
+				alt="Logo"
+				class="h-32 md:h-40 w-auto mb-8 select-none"
+			/>
+			<h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+				<span class="text-teal-400">Impulsa</span> tu negocio con <br />
+				<span class="text-teal-400">automatización</span> y desarrollo a medida
+			</h1>
+			<p class="mt-6 max-w-2xl text-xl opacity-90">
+				Creamos soluciones digitales que combinan
+				<strong>creatividad</strong>, <strong>tecnología</strong> y
+				<strong>estrategia</strong> para llevar tu marca al siguiente nivel.
+			</p>
+			<a
+				href="#contacto"
+				class="mt-10 inline-block bg-teal-500 hover:bg-teal-600 px-8 py-3 rounded-lg font-semibold shadow-lg transition"
+			>
+				Solicita una consulta gratuita
+			</a>
 		</section>
 
-		<!-- ============ SERVICIOS (Flip Cards) ============ -->
-		<section id="servicios" class="py-24 bg-gray-900">
-			<div class="container mx-auto px-6">
-				<h2 class="text-3xl font-bold mb-12 text-teal-400 text-center">
-					/ Servicios
+		<!-- ========== SERVICIOS ==========
+         Cuatro tarjetas, una por servicio
+    -->
+		<section id="servicios" class="py-24 bg-slate-900">
+			<div class="max-w-7xl mx-auto px-6">
+				<h2
+					class="text-3xl md:text-4xl font-bold text-center mb-16 tracking-tight"
+				>
+					<span class="text-teal-400">/</span> Servicios
 				</h2>
-				<div class="grid md:grid-cols-3 gap-8">
-					<!-- Card -->
-					<div class="group perspective-[1000px]">
+				<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+					<!-- Autom. publicidad -->
+					<div
+						class="bg-slate-800 rounded-xl p-8 shadow-lg hover:-translate-y-2 transition group"
+					>
 						<div
-							class="relative w-full h-72 duration-700 [transform-style:preserve-3d] group-hover:rotate-y-180"
+							class="w-12 h-12 mb-6 flex items-center justify-center rounded-full bg-teal-500/20 text-teal-400"
 						>
-							<!-- Cara frontal -->
-							<div
-								class="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 rounded-xl border border-gray-700"
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
 							>
-								<h3 class="text-xl font-semibold mb-4">Aplicaciones Web</h3>
-								<p class="opacity-80 px-4 text-center">
-									Full-stack con performance y seguridad.
-								</p>
-							</div>
-							<!-- Cara trasera -->
-							<div
-								class="absolute inset-0 flex items-center justify-center bg-gray-900 rounded-xl border border-teal-500 [transform:rotateY(180deg)]"
-							>
-								<pre
-									class="language-js text-sm p-4"
-								><code class="language-javascript">// Express.js\napp.get('/', (req, res) => {\n  res.json({ msg: 'Hello - world' });\n});</code></pre>
-							</div>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M7 8h10M7 12h4m3 8l4-4-4-4m5 4H3"
+								/>
+							</svg>
 						</div>
+						<h3 class="text-xl font-semibold mb-3">
+							Automatización de Publicidad
+						</h3>
+						<p class="opacity-80">
+							Optimiza tus campañas de marketing con flujos inteligentes y
+							segmentación basada en IA.
+						</p>
 					</div>
-
-					<!-- Repite o duplica cards según necesidad -->
-					<!-- ... -->
+					<!-- Autom. procesos internos -->
+					<div
+						class="bg-slate-800 rounded-xl p-8 shadow-lg hover:-translate-y-2 transition group"
+					>
+						<div
+							class="w-12 h-12 mb-6 flex items-center justify-center rounded-full bg-teal-500/20 text-teal-400"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M3 7h18M3 12h18M3 17h18"
+								/>
+							</svg>
+						</div>
+						<h3 class="text-xl font-semibold mb-3">
+							Automatización de Procesos Internos
+						</h3>
+						<p class="opacity-80">
+							Digitalizamos y vinculamos tus operaciones para mejorar la
+							eficiencia y reducir costos.
+						</p>
+					</div>
+					<!-- Desarrollo Web -->
+					<div
+						class="bg-slate-800 rounded-xl p-8 shadow-lg hover:-translate-y-2 transition group"
+					>
+						<div
+							class="w-12 h-12 mb-6 flex items-center justify-center rounded-full bg-teal-500/20 text-teal-400"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M16 7a4 4 0 01-8 0"
+								/>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M12 14l9 5-9 5-9-5 9-5z"
+								/>
+							</svg>
+						</div>
+						<h3 class="text-xl font-semibold mb-3">Desarrollo Web</h3>
+						<p class="opacity-80">
+							Portales, e‑commerce y aplicaciones web progresivas que cautivan y
+							convierten.
+						</p>
+					</div>
+					<!-- Desarrollo de Software -->
+					<div
+						class="bg-slate-800 rounded-xl p-8 shadow-lg hover:-translate-y-2 transition group"
+					>
+						<div
+							class="w-12 h-12 mb-6 flex items-center justify-center rounded-full bg-teal-500/20 text-teal-400"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 12l2 2 4-4"
+								/>
+							</svg>
+						</div>
+						<h3 class="text-xl font-semibold mb-3">Desarrollo de Software</h3>
+						<p class="opacity-80">
+							Sistemas a medida, multiplataforma y escalables que resuelven
+							retos críticos de negocio.
+						</p>
+					</div>
 				</div>
 			</div>
 		</section>
 
-		<!-- ============ CLIENTES (Ticker) ============ -->
-		<section id="clientes" class="bg-gray-950 py-24">
-			<div class="max-w-6xl mx-auto px-6 text-center">
-				<h2 class="text-teal font-bold text-3xl mb-4">
-					/ Clientes que confían en nosotros
+		<!-- ========== NOSOTROS ==========
+         Breve historia y enfoque del equipo
+    -->
+		<section id="nosotros" class="py-24">
+			<div class="max-w-5xl mx-auto px-6 text-center">
+				<h2 class="text-3xl md:text-4xl font-bold mb-8">
+					<span class="text-teal-400">/</span> Nosotros
 				</h2>
-
-				<!-- contenedor con overflow oculto -->
-				<div class="overflow-hidden mt-12">
-					<!-- pista duplicada para bucle infinito -->
-					<div id="logo-track" class="flex items-center gap-16">
-						<!-- Logos (duplica o recorta los que necesites) -->
-						<img
-							src="https://cdn.prod.website-files.com/62b4e3084bb69b3cbd747e80/633b2f78bbd2b43834df6ca9_gmx.png"
-							alt="Cliente 1"
-							class="h-12 w-auto"
-						/>
-						<img
-							src="https://cdn.prod.website-files.com/62b4e3084bb69b3cbd747e80/633b2f78bbd2b43834df6ca9_gmx.png"
-							alt="Cliente 2"
-							class="h-12 w-auto"
-						/>
-						<img
-							src="https://cdn.prod.website-files.com/62b4e3084bb69b3cbd747e80/633b2f78bbd2b43834df6ca9_gmx.png"
-							alt="Cliente 3"
-							class="h-12 w-auto"
-						/>
-					</div>
-				</div>
+				<p class="text-xl leading-relaxed">
+					Somos un equipo de
+					<span class="text-teal-400">ingenieros, creativos y estrategas</span>
+					apasionados por la tecnología y la innovación. Con más de 8 años
+					desarrollando soluciones de alto impacto, ayudamos a las empresas a
+					crecer mediante la automatización y el desarrollo de software robusto.
+				</p>
 			</div>
 		</section>
 
-		<!-- ============ CONTACTO (Formulario) ============ -->
-		<section id="contacto" class="py-24 bg-gray-950">
-			<div class="container mx-auto max-w-lg px-6">
-				<h2 class="text-3xl font-bold mb-8 text-teal-400 text-center">
-					/ Contacto
-				</h2>
+		<!-- ========== CTA intermedio ========= -->
+		<section
+			class="py-24 bg-gradient-to-b from-teal-600 to-teal-500 text-center text-slate-950"
+		>
+			<h2 class="text-3xl md:text-4xl font-bold mb-6">
+				¿Listo para transformar tu negocio?
+			</h2>
+			<a
+				href="#contacto"
+				class="inline-block bg-slate-950 hover:bg-slate-900 text-white px-10 py-4 rounded-lg font-semibold shadow-xl transition"
+			>
+				Hablemos
+			</a>
+		</section>
 
-				<form id="contact-form" class="space-y-6">
+		<!-- ========== CONTACTO ==========
+         Formulario simple
+    -->
+		<section id="contacto" class="py-24">
+			<div class="max-w-xl mx-auto px-6">
+				<h2 class="text-3xl md:text-4xl font-bold text-center mb-8">
+					<span class="text-teal-400">/</span> Contacto
+				</h2>
+				<form class="space-y-6">
 					<div>
 						<label class="block mb-2">Nombre</label>
 						<input
+							type="text"
+							class="w-full p-3 rounded bg-slate-800 border border-slate-700"
 							required
-							name="name"
-							class="w-full p-3 rounded bg-gray-800 border border-gray-700"
 						/>
 					</div>
 					<div>
-						<label class="block mb-2">Correo</label>
+						<label class="block mb-2">Correo electrónico</label>
 						<input
-							required
 							type="email"
-							name="email"
-							class="w-full p-3 rounded bg-gray-800 border border-gray-700"
+							class="w-full p-3 rounded bg-slate-800 border border-slate-700"
+							required
 						/>
 					</div>
 					<div>
 						<label class="block mb-2">Mensaje</label>
 						<textarea
-							required
-							name="message"
 							rows="4"
-							class="w-full p-3 rounded bg-gray-800 border border-gray-700"
+							class="w-full p-3 rounded bg-slate-800 border border-slate-700"
+							required
 						></textarea>
 					</div>
-
 					<button
 						type="submit"
-						class="w-full py-3 bg-teal-500 hover:bg-teal-600 rounded-lg font-semibold shadow-lg"
+						class="w-full py-3 bg-teal-500 hover:bg-teal-600 rounded-lg font-semibold shadow-lg transition"
 					>
 						Enviar
 					</button>
 				</form>
-
-				<!-- Barra ASCII de compilación -->
-				<pre
-					id="compile-bar"
-					class="hidden text-green-400 font-mono mt-6 whitespace-pre-wrap"
-				></pre>
 			</div>
 		</section>
 
-		<!-- ============ SCRIPTS ============ -->
+		<!-- ============ FOOTER v2 ============ -->
+		<section class="relative">
+			<!-- Onda superior -->
+			<svg
+				class="absolute inset-x-0 -top-1 rotate-180 text-[#0d1b2a]"
+				<!--
+				fondo
+				padre
+				--
+			>
+				viewBox="0 0 1440 100" preserveAspectRatio="none">
+				<path
+					d="M0,0 C360,80 720,0 1080,60 1320,100 1440,80 1440,80 L1440,100 L0,100 Z"
+					fill="currentColor"
+				></path>
+			</svg>
+
+			<footer
+				id="footer"
+				class="bg-[#0d1b2a] text-gray-300 px-6 py-12 sm:py-10 md:py-12 relative overflow-hidden"
+			>
+				<div class="container mx-auto grid gap-12 md:grid-cols-3">
+					<!-- Logo + claim -->
+					<div>
+						<img
+							src="img/logoL.png"
+							alt="E2B"
+							class="h-10 opacity-90 mb-4 select-none"
+						/>
+						<p class="max-w-xs opacity-80 leading-relaxed">
+							Creamos soluciones digitales que escalan tu&nbsp;negocio.
+						</p>
+					</div>
+
+					<!-- Navegación rápida -->
+					<nav
+						class="flex flex-col gap-2 text-sm uppercase font-medium tracking-wider"
+					>
+						<a href="#servicios" class="hover:text-teal-400">Servicios</a>
+						<a href="#nosotros" class="hover:text-teal-400">Nosotros</a>
+						<a href="#proyectos" class="hover:text-teal-400">Proyectos</a>
+						<a href="#contacto" class="hover:text-teal-400">Contacto</a>
+					</nav>
+
+					<!-- Newsletter + redes -->
+					<div class="space-y-5">
+						<p class="uppercase text-sm tracking-wider font-semibold">
+							¡Recibe tips y casos de éxito!
+						</p>
+						<form class="flex">
+							<input
+								type="email"
+								required
+								placeholder="Tu e-mail"
+								class="flex-1 bg-gray-800/60 border border-gray-700 placeholder-gray-500 text-sm px-3 py-2 rounded-l-md focus:outline-none"
+							/>
+							<button
+								type="submit"
+								class="bg-teal-500 hover:bg-teal-600 px-4 rounded-r-md text-sm font-semibold"
+							>
+								Enviar
+							</button>
+						</form>
+
+						<!-- Redes -->
+						<div class="flex gap-3 pt-2">
+							<a
+								href="#"
+								aria-label="Facebook"
+								class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-teal-500 transition"
+							>
+								<!-- fb svg -->
+								<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+									<path
+										d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.2 3-3.2.9 0 1.8.07 2 .1v2.3h-1.1c-1 0-1.3.6-1.3 1.2V12h2.5l-.4 3h-2v7A10 10 0 0 0 22 12Z"
+									/>
+								</svg>
+							</a>
+							<!-- X -->
+							<a
+								href="#"
+								aria-label="X"
+								class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-teal-500 transition"
+							>
+								<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+									<path
+										d="M20 4.6L13.3 12l6.4 7.3h-2.5l-5.1-5.9-5.2 5.9H4l6.4-7.2L4 4.7h2.5l4.8 5.5 4.8-5.5h3Z"
+									/>
+								</svg>
+							</a>
+							<!-- LinkedIn -->
+							<a
+								href="#"
+								aria-label="LinkedIn"
+								class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-teal-500 transition"
+							>
+								<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+									<path
+										d="M6.94 6.5a1.94 1.94 0 1 1 0-3.88 1.94 1.94 0 0 1 0 3.88ZM4 8.22h5.88V22H4ZM13 8.22h5.64v1.88h.08a6.18 6.18 0 0 1 5.56-3.06C27 7.04 28 9 28 12.59V22h-5.88v-8.47c0-2.02-.04-4.62-2.77-4.62-2.78 0-3.2 2.17-3.2 4.42V22H13Z"
+									/>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="text-center text-xs mt-10 opacity-70">
+					© 2025 E2B. Todos los derechos reservados.
+				</div>
+			</footer>
+		</section>
+
+		<!-- ========== SCRIPTS ========= -->
 		<script>
-			/* ---------------- Typewriter ---------------- */
-			gsap.registerPlugin(TextPlugin);
-			gsap.to("#typewriter", {
-				text: "Impulsamos tu visión digital",
-				duration: 4,
-				ease: "none",
-				repeat: -1,
-				repeatDelay: 2,
-				yoyo: true,
+			/* ----- Menú mobile ----- */
+			const menuBtn = document.getElementById("menuBtn");
+			const mobileMenu = document.getElementById("mobileMenu");
+			menuBtn.addEventListener("click", () => {
+				mobileMenu.classList.toggle("hidden");
 			});
 
-			/* ---------------- Código flotante parallax ---------------- */
-			const chars = [
-				"<",
-				"/",
-				">",
-				"{",
-				"}",
-				"(",
-				")",
-				";",
-				"=",
-				'"',
-				"const",
-				"let",
-				"function",
-				"=>",
-			];
-
-			function spawnLayer(selector, density = 50) {
-				const layer = document.querySelector(selector);
-				const frag = document.createDocumentFragment();
-				for (let i = 0; i < density; i++) {
-					const span = document.createElement("span");
-					span.textContent = chars[Math.floor(Math.random() * chars.length)];
-					span.className =
-						"text-teal-400 font-mono opacity-10 select-none absolute";
-					span.style.transform = `translate(${Math.random() * 100}vw, ${
-						Math.random() * 100
-					}vh)`;
-					frag.appendChild(span);
-				}
-				layer.appendChild(frag);
-			}
-			spawnLayer(".layer-1", 60);
-			spawnLayer(".layer-2", 40);
-
-			gsap.utils.toArray(".code-layer").forEach((layer, i) => {
-				gsap.to(layer, {
-					yPercent: (i + 1) * 12,
-					ease: "none",
-					scrollTrigger: { trigger: layer, start: "top bottom", scrub: 1 },
-				});
-			});
-
-			document.addEventListener("mousemove", (e) => {
-				const x = (e.clientX / window.innerWidth - 0.5) * 15;
-				const y = (e.clientY / window.innerHeight - 0.5) * 15;
-				gsap.to(".code-layer", {
-					rotateY: x,
-					rotateX: -y,
-					duration: 0.6,
-					ease: "power3.out",
-				});
-			});
-
-			/* ---------------- Glitch (GSAP flashy) ---------------- */
-			document.querySelectorAll(".glitch").forEach((el) => {
-				el.dataset.glitch = ""; // duplica texto del logo para pseudo
-				const tl = gsap.timeline({ paused: true });
-				tl.to(el, { x: 2, y: -2, duration: 0.02, repeat: 5, yoyo: true });
-				el.addEventListener("mouseenter", () => tl.restart());
-			});
-
-			/* ---------------- Terminal interactiva ---------------- */
-			const term = document.getElementById("terminal");
-			let prompt = document.createElement("div");
-			prompt.textContent = "> ";
-			term.appendChild(prompt);
-			let blinker = term.querySelector(".blinker");
-
-			document.addEventListener("keydown", (e) => {
-				if (
-					document.activeElement.tagName === "INPUT" ||
-					document.activeElement.tagName === "TEXTAREA"
-				)
-					return;
-				if (e.key === "Backspace") {
-					prompt.textContent = prompt.textContent.slice(0, -1);
-				} else if (e.key === "Enter") {
-					const cmd = prompt.textContent.replace("> ", "").trim();
-					executeCommand(cmd);
-					prompt = document.createElement("div");
-					prompt.textContent = "> ";
-					term.appendChild(prompt);
-					term.scrollTop = term.scrollHeight;
-				} else if (e.key.length === 1) {
-					prompt.textContent += e.key;
-				}
-			});
-
-			function executeCommand(cmd) {
-				const output = document.createElement("div");
-				switch (cmd) {
-					case "help":
-						output.innerText = "Comandos: help | stack | years | clear";
-						break;
-					case "stack":
-						output.innerText = "Node, React, Vue, Go, AWS, Docker";
-						break;
-					case "years":
-						output.innerText = "8+ años de experiencia";
-						break;
-					case "clear":
-						term.innerHTML = "";
-						return;
-					default:
-						output.innerText = `Comando no encontrado: ${cmd}`;
-				}
-				term.appendChild(output);
-			}
-
-			/* ---------------- Flip-card: Prism highlight al voltear ---------------- */
-			document.querySelectorAll(".group").forEach((card) => {
-				card.addEventListener("mouseenter", () => Prism.highlightAll());
-			});
-
-			/* ---------------- Formulario: barra “compiling…” ---------------- */
-			const form = document.getElementById("contact-form");
-			const bar = document.getElementById("compile-bar");
-			form.addEventListener("submit", (e) => {
-				e.preventDefault();
-				form.classList.add("opacity-50", "pointer-events-none");
-				bar.classList.remove("hidden");
-				let progress = 0;
-				const interval = setInterval(() => {
-					progress += 4;
-					const done = "=".repeat(Math.floor(progress / 4));
-					const empty = " ".repeat(25 - done.length);
-					bar.textContent = `[${done}${empty}] compiling…`;
-					if (progress >= 100) {
-						clearInterval(interval);
-						bar.textContent = "[=========================] ✔ enviado!";
-					}
-				}, 120);
-			});
-
-			/* ---------------- Accesibilidad motion ---------------- */
-			if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-				gsap.globalTimeline.timeScale(0); // detiene todas las animaciones
-			}
-		</script>
-		<script>
-			/* ---------- Ticker de logos ---------- */
-			if (document.getElementById("logo-track")) {
-				const track = document.getElementById("logo-track");
-
-				// Duplicamos contenido para lograr bucle infinito
-				track.innerHTML += track.innerHTML;
-
-				// GSAP timeline que desliza todo el ancho duplicado
-				gsap.to(track, {
-					x: () => -track.scrollWidth / 2, // recorre la mitad (porque está duplicado)
-					duration: 25, // velocidad (ajusta segundos)
-					ease: "none",
-					repeat: -1,
-				});
-
-				// Fade-in suave cuando la sección entra
-				gsap.from(track, {
+			/* ----- GSAP animaciones de aparición ----- */
+			gsap.registerPlugin(ScrollTrigger);
+			gsap.utils.toArray("section").forEach((sec) => {
+				gsap.from(sec, {
 					opacity: 0,
+					y: 40,
 					duration: 0.8,
 					ease: "power2.out",
 					scrollTrigger: {
-						trigger: "#clientes",
+						trigger: sec,
 						start: "top 80%",
-						once: true,
 					},
 				});
-			}
+			});
+
+			/* ---------- Footer v2 animations ---------- */
+			gsap.from("#footer", {
+				yPercent: 20,
+				opacity: 0,
+				duration: 1,
+				ease: "power3.out",
+				scrollTrigger: {
+					trigger: "#footer",
+					start: "top 85%",
+					once: true,
+				},
+			});
+
+			gsap.from("#footer nav a, #footer form, #footer .space-y-5 > div a", {
+				y: 24,
+				opacity: 0,
+				stagger: 0.08,
+				duration: 0.7,
+				ease: "power2.out",
+				scrollTrigger: {
+					trigger: "#footer",
+					start: "top 85%",
+					once: true,
+				},
+			});
 		</script>
 	</body>
 </html>
