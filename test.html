@@ -54,6 +54,30 @@
 			#caret {
 				animation: caretBlink 1s step-end infinite;
 			}
+			.card-raise {
+				position: relative;
+				overflow: hidden;
+			}
+			.card-raise:hover {
+				transform: translateY(-2px);
+			}
+			.card-raise::after {
+				content: "";
+				position: absolute;
+				inset: -1px;
+				background: linear-gradient(
+					120deg,
+					transparent 40%,
+					rgba(255, 255, 255, 0.14) 50%,
+					transparent 60%
+				);
+				transform: translateX(-130%);
+				transition: transform 0.7s ease;
+				pointer-events: none;
+			}
+			.card-raise:hover::after {
+				transform: translateX(130%);
+			}
 		</style>
 	</head>
 	<body class="bg-base text-zinc-100 antialiased selection:bg-white/10">
@@ -75,7 +99,7 @@
 					</button>
 					<ul id="menu" class="hidden lg:flex items-center gap-6">
 						<li><a class="hover:opacity-80" href="#servicios">Servicios</a></li>
-						<li><a class="hover:opacity-80" href="#proyectos">Proyectos</a></li>
+						<li><a class="hover:opacity-80" href="#proyectos">Partners</a></li>
 						<li><a class="hover:opacity-80" href="#nosotros">Nosotros</a></li>
 						<li><a class="hover:opacity-80" href="#contacto">Contacto</a></li>
 						<li>
@@ -260,7 +284,7 @@
 			</div>
 		</section>
 
-		<div class="mb-10 text-center">
+		<div class="mb-10 text-center" id="servicios">
 			<h2 class="font-display text-3xl md:text-4xl">
 				Nuestros
 				<span class="text-white/60">._servicios</span>
@@ -361,7 +385,10 @@
 									<div
 										class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
 									>
-										<div class="h-2 w-[78%] rounded-full bg-[#14B8A6]"></div>
+										<div
+											class="progress h-2 w-0 rounded-full bg-[#14B8A6]"
+											data-progress="78"
+										></div>
 									</div>
 								</div>
 							</div>
@@ -373,7 +400,15 @@
 									<div
 										class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
 									>
-										<div class="h-2 w-[68%] rounded-full bg-[#14B8A6]"></div>
+										<!-- Cash Applications -->
+										<div
+											class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
+										>
+											<div
+												class="progress h-2 w-0 rounded-full bg-[#14B8A6]"
+												data-progress="68"
+											></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -385,7 +420,15 @@
 									<div
 										class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
 									>
-										<div class="h-2 w-[80%] rounded-full bg-[#14B8A6]"></div>
+										<!-- Logistics -->
+										<div
+											class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
+										>
+											<div
+												class="progress h-2 w-0 rounded-full bg-[#14B8A6]"
+												data-progress="80"
+											></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -397,15 +440,52 @@
 									<div
 										class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
 									>
-										<div class="h-2 w-[85%] rounded-full bg-[#14B8A6]"></div>
+										<div
+											class="h-2 rounded-full bg-[repeating-linear-gradient(to_right,transparent,transparent_10px,rgba(255,255,255,0.08)_10px,rgba(255,255,255,0.08)_11px)]"
+										>
+											<div
+												class="progress h-2 w-0 rounded-full bg-[#14B8A6]"
+												data-progress="85"
+											></div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
+						<div
+							id="serviceStats"
+							class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 will-animate"
+						>
+							<div>
+								<div class="text-2xl md:text-4xl font-display">
+									<span class="count" data-to="120">0</span>+
+								</div>
+								<p class="text-white/60">Automatizaciones</p>
+							</div>
+							<div>
+								<div class="text-3xl md:text-4xl font-display">
+									<span class="count" data-to="35">0</span>%
+								</div>
+								<p class="text-white/60">Ahorro en tiempo</p>
+							</div>
+							<div>
+								<div class="text-3xl md:text-4xl font-display">
+									<span class="count" data-to="90">0</span>%
+								</div>
+								<p class="text-white/60">Core Web Vitals en verde</p>
+							</div>
+							<div>
+								<div class="text-3xl md:text-4xl font-display">
+									<span class="count" data-to="18">0</span>d
+								</div>
+								<p class="text-white/60">Promedio de entrega</p>
+							</div>
+						</div>
+
 						<!-- Filtros (simulación) -->
 						<div class="mt-6 flex flex-wrap gap-3">
-							<button
+							<!-- <button
 								class="inline-flex items-center gap-2 rounded-xl bg-white/[0.06] px-3 py-2 text-white/80 ring-1 ring-white/10 hover:bg-white/10"
 							>
 								All Products
@@ -422,8 +502,8 @@
 										stroke-width="2"
 									/>
 								</svg>
-							</button>
-							<button
+							</button> -->
+							<!-- <button
 								class="inline-flex items-center gap-2 rounded-xl bg-white/[0.06] px-3 py-2 text-white/80 ring-1 ring-white/10 hover:bg-white/10"
 							>
 								Monthly
@@ -440,7 +520,7 @@
 										stroke-width="2"
 									/>
 								</svg>
-							</button>
+							</button> -->
 						</div>
 					</div>
 
@@ -453,7 +533,7 @@
 								class="inline-flex h-6 w-6 items-center justify-center rounded-xl ring-1 ring-cyan-400/40 bg-cyan-500/10"
 								>💲</span
 							>
-							<span class="text-white/90">Fintech</span>
+							<!-- <span class="text-white/90">Fintech</span> -->
 						</div>
 					</div>
 
@@ -477,7 +557,7 @@
 								class="inline-flex h-6 w-6 items-center justify-center rounded-xl ring-1 ring-fuchsia-400/40 bg-fuchsia-500/10"
 								>📄</span
 							>
-							<span class="text-white/90">Marketing</span>
+							<!-- <span class="text-white/90">Marketing</span> -->
 						</div>
 					</div>
 				</div>
@@ -506,51 +586,8 @@
 
 				<!-- Grid 3x2 -->
 				<div class="mt-16 grid gap-x-16 gap-y-20 md:grid-cols-2 lg:grid-cols-3">
-					<!-- Item 1 -->
-					<article class="space-y-3">
-						<div
-							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-teal-400/40 bg-teal-500/10 text-teal-300"
-						>
-							<!-- eye -->
-							<svg
-								viewBox="0 0 24 24"
-								class="h-6 w-6"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="1.8"
-							>
-								<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
-								<circle cx="12" cy="12" r="3.2" />
-							</svg>
-						</div>
-						<h3 class="text-2xl font-semibold">Instant access</h3>
-						<p class="text-white/60 max-w-[40ch]">
-							Duis auter irure dolor repreh enderit in voluptate velit esse
-							cillum.
-						</p>
-						<a
-							href="#"
-							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
-						>
-							Learn more
-							<svg
-								viewBox="0 0 24 24"
-								class="h-4 w-4"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path
-									d="M5 12h14M13 5l7 7-7 7"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						</a>
-					</article>
-
 					<!-- Item 2 -->
-					<article class="space-y-3">
+					<article class="space-y-3 card-raise will-animate px-1 py-1">
 						<div
 							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-cyan-400/40 bg-cyan-500/10 text-cyan-300"
 						>
@@ -569,12 +606,12 @@
 								/>
 							</svg>
 						</div>
-						<h3 class="text-2xl font-semibold">Smart integration</h3>
+						<h3 class="text-2xl font-semibold">Misión</h3>
 						<p class="text-white/60 max-w-[40ch]">
-							Duis auter irure dolor repreh enderit in voluptate velit esse
-							cillum.
+							Automatizar lo repetitivo, optimizar campañas con IA y construir
+							software a la medida para liberar tiempo y generar valor medible
 						</p>
-						<a
+						<!-- <a
 							href="#"
 							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
 						>
@@ -592,11 +629,11 @@
 									stroke-linejoin="round"
 								/>
 							</svg>
-						</a>
+						</a> -->
 					</article>
 
 					<!-- Item 3 -->
-					<article class="space-y-3">
+					<article class="space-y-3 card-raise will-animate px-1 py-1">
 						<div
 							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-fuchsia-400/40 bg-fuchsia-500/10 text-fuchsia-300"
 						>
@@ -612,12 +649,13 @@
 								<path d="M21 8.25v7.5L12 21 3 15.75v-7.5M12 13.5v7.5" />
 							</svg>
 						</div>
-						<h3 class="text-2xl font-semibold">Customizable options</h3>
+						<h3 class="text-2xl font-semibold">Visión</h3>
 						<p class="text-white/60 max-w-[40ch]">
-							Duis auter irure dolor repreh enderit in voluptate velit esse
-							cillum.
+							Ser el aliado tecnológico que convierte procesos en flujos
+							inteligentes, campañas en aprendizaje continuo y software en
+							ventaja competitiva.
 						</p>
-						<a
+						<!-- <a
 							href="#"
 							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
 						>
@@ -635,11 +673,11 @@
 									stroke-linejoin="round"
 								/>
 							</svg>
-						</a>
+						</a> -->
 					</article>
 
 					<!-- Item 4 -->
-					<article class="space-y-3">
+					<article class="space-y-3 card-raise will-animate px-1 py-1">
 						<div
 							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-yellow-400/40 bg-yellow-500/10 text-yellow-300"
 						>
@@ -661,12 +699,12 @@
 								/>
 							</svg>
 						</div>
-						<h3 class="text-2xl font-semibold">Secure transactions</h3>
+						<h3 class="text-2xl font-semibold">Valores</h3>
 						<p class="text-white/60 max-w-[40ch]">
-							Duis auter irure dolor repreh enderit in voluptate velit esse
-							cillum.
+							Claridad, Datos primero, Velocidad con calidad, Simplicidad
+							escalable, IA responsable y Transparencia en cada entrega.
 						</p>
-						<a
+						<!-- <a
 							href="#"
 							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
 						>
@@ -684,11 +722,11 @@
 									stroke-linejoin="round"
 								/>
 							</svg>
-						</a>
+						</a> -->
 					</article>
 
 					<!-- Item 5 -->
-					<article class="space-y-3">
+					<article class="space-y-3 card-raise will-animate px-1 py-1">
 						<div
 							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-rose-400/40 bg-rose-500/10 text-rose-300"
 						>
@@ -704,12 +742,13 @@
 								<path d="M7.6 16.4 16.4 7.6" />
 							</svg>
 						</div>
-						<h3 class="text-2xl font-semibold">Mobile optimization</h3>
+						<h3 class="text-2xl font-semibold">Equipo y enfoque</h3>
 						<p class="text-white/60 max-w-[40ch]">
-							Duis auter irure dolor repreh enderit in voluptate velit esse
-							cillum.
+							Equipo multidisciplinario (estrategia, diseño, analítica) con foco
+							en negocio y usuario. Simplificamos procesos y mensajes para que
+							todo sea claro, útil y orientado a resultados.
 						</p>
-						<a
+						<!-- <a
 							href="#"
 							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
 						>
@@ -727,11 +766,11 @@
 									stroke-linejoin="round"
 								/>
 							</svg>
-						</a>
+						</a> -->
 					</article>
 
 					<!-- Item 6 -->
-					<article class="space-y-3">
+					<article class="space-y-3 card-raise will-animate px-1 py-1">
 						<div
 							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-lime-400/40 bg-lime-500/10 text-lime-300"
 						>
@@ -747,12 +786,13 @@
 								<path d="M10 18h6a2 2 0 0 0 2-2v-6" />
 							</svg>
 						</div>
-						<h3 class="text-2xl font-semibold">Scalable solutions</h3>
+						<h3 class="text-2xl font-semibold">Metodología</h3>
 						<p class="text-white/60 max-w-[40ch]">
-							Duis auter irure dolor repreh enderit in voluptate velit esse
-							cillum.
+							Co-creación con tu equipo y objetivos medibles. Trabajamos en
+							iteraciones cortas, con entregables accionables, feedback
+							continuo, comunicación transparente y adopción guiada.
 						</p>
-						<a
+						<!-- <a
 							href="#"
 							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
 						>
@@ -770,7 +810,50 @@
 									stroke-linejoin="round"
 								/>
 							</svg>
-						</a>
+						</a> -->
+					</article>
+
+					<!-- Item 1 -->
+					<article class="space-y-3 card-raise will-animate px-1 py-1">
+						<div
+							class="inline-flex h-12 w-12 items-center justify-center rounded-xl ring-1 ring-teal-400/40 bg-teal-500/10 text-teal-300"
+						>
+							<!-- eye -->
+							<svg
+								viewBox="0 0 24 24"
+								class="h-6 w-6"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+							>
+								<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+								<circle cx="12" cy="12" r="3.2" />
+							</svg>
+						</div>
+						<h3 class="text-2xl font-semibold">Impacto medible</h3>
+						<p class="text-white/60 max-w-[40ch]">
+							KPIs acordados, dashboards útiles y A/B testing continuo para
+							reducir CAC, aumentar conversión y ahorrar horas operativas.
+						</p>
+						<!-- <a
+							href="#"
+							class="inline-flex items-center gap-2 font-semibold hover:opacity-90"
+						>
+							Learn more
+							<svg
+								viewBox="0 0 24 24"
+								class="h-4 w-4"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path
+									d="M5 12h14M13 5l7 7-7 7"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</a> -->
 					</article>
 				</div>
 			</div>
@@ -1077,6 +1160,45 @@
 				}
 
 				setInterval(swap, INTERVALO_MS);
+			})();
+		</script>
+		<script>
+			(() => {
+				if (!window.gsap) return;
+
+				gsap.utils.toArray(".progress").forEach((bar) => {
+					const to = +bar.dataset.progress || 0;
+					gsap.fromTo(
+						bar,
+						{ width: "0%" },
+						{
+							width: to + "%",
+							duration: 1.2,
+							ease: "power2.out",
+							scrollTrigger: { trigger: bar, start: "top 85%" },
+						}
+					);
+				});
+			})();
+		</script>
+		<script>
+			(() => {
+				if (!window.gsap) return;
+
+				gsap.utils.toArray("#serviceStats .count").forEach((el) => {
+					const to = +el.dataset.to || 0;
+					gsap.fromTo(
+						el,
+						{ innerText: 0 },
+						{
+							innerText: to,
+							duration: 1.4,
+							ease: "power1.out",
+							snap: { innerText: 1 },
+							scrollTrigger: { trigger: el, start: "top 85%" },
+						}
+					);
+				});
 			})();
 		</script>
 	</body>

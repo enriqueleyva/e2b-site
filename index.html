@@ -508,5 +508,25 @@
 				},
 			});
 		</script>
+		<script>
+			(() => {
+				if (!window.gsap) return;
+
+				gsap.utils.toArray("#serviceStats .count").forEach((el) => {
+					const to = +el.dataset.to || 0;
+					gsap.fromTo(
+						el,
+						{ innerText: 0 },
+						{
+							innerText: to,
+							duration: 1.4,
+							ease: "power1.out",
+							snap: { innerText: 1 },
+							scrollTrigger: { trigger: el, start: "top 85%" },
+						}
+					);
+				});
+			})();
+		</script>
 	</body>
 </html>
