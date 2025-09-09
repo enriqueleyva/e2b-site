@@ -282,31 +282,48 @@
 						class="inline-flex items-center gap-2 rounded-xl bg-white/[0.06] px-3 py-1 ring-1 ring-white/10"
 					>
 						<span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-						<span class="text-xs tracking-widest text-white/70">ANALYSIS</span>
+						<span class="text-xs tracking-widest text-white/70">SERVICIOS</span>
 					</span>
 
 					<!-- Título + subtítulo -->
-					<h3
+					<!-- <h3
 						class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight font-display font-semibold"
 					>
 						Automatización<br class="hidden sm:block" />
 						<span class="text-white/60">de publicidad</span>
-						<!-- <br class="hidden sm:block" />
-						para decisiones rápidas -->
+					</h3> -->
+					<h3
+						class="text-3xl/tight sm:text-4xl/tight md:text-5xl/tight font-display font-semibold"
+					>
+						<span
+							id="rot-1"
+							class="inline-block max-w-full align-top whitespace-normal break-words transition-all duration-300 ease-out"
+						>
+							Automatización
+						</span>
+						<br class="hidden sm:block" />
+						<span class="text-white/60">
+							<span
+								id="rot-2"
+								class="inline-block max-w-full align-top whitespace-normal break-words transition-all duration-300 ease-out"
+							>
+								de publicidad
+							</span>
+						</span>
 					</h3>
 
-					<p class="max-w-prose text-white/60">
+					<p id="rot-p" class="max-w-prose text-white/60">
 						Optimiza tus campañas de marketing con flujos inteligentes y
 						segmentación basada en IA.
 					</p>
 
 					<!-- CTA -->
-					<a
+					<!-- <a
 						href="#"
 						class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-white hover:bg-white/10"
 					>
 						Learn More
-					</a>
+					</a> -->
 				</div>
 
 				<!-- Columna derecha: panel con barras -->
@@ -983,6 +1000,84 @@
 					},
 				});
 			}
+		</script>
+		<script>
+			(function () {
+				// Slides: título línea 1, línea 2 y descripción
+				const slides = [
+					{
+						l1: "Automatización",
+						l2: "de publicidad",
+						p: "Optimiza tus campañas de marketing con flujos inteligentes y segmentación basada en IA.",
+					},
+					{
+						l1: "Generación Automática ",
+						l2: "de Documentos",
+						p: "Ahorra tiempo y esfuerzo al crear informes, contratos o reportes con plantillas inteligentes.",
+					},
+					{
+						l1: "Clasificación ",
+						l2: "Inteligente de Datos",
+						p: "Organiza y etiqueta grandes volúmenes de información de forma ágil, optimizando la toma de decisiones.",
+					},
+					{
+						l1: "Chat e Interacción",
+						l2: " con Documentos",
+						p: "Consulta PDFs y extrae información en segundos; olvídate de búsquedas manuales extensas.",
+					},
+					{
+						l1: "Análisis Avanzado",
+						l2: "de Imágenes",
+						p: "Detección de objetos, reconocimiento de patrones y control de calidad en tiempo real.",
+					},
+				];
+
+				const INTERVALO_MS = 5000; // <-- cambia aquí el tiempo entre cambios
+
+				const el1 = document.getElementById("rot-1");
+				const el2 = document.getElementById("rot-2");
+				const elP = document.getElementById("rot-p");
+				if (!el1 || !el2 || !elP) return;
+
+				let i = 0;
+				function setSlide(s) {
+					el1.textContent = s.l1;
+					el2.textContent = s.l2;
+					elP.textContent = s.p;
+				}
+
+				// Estado inicial
+				setSlide(slides[i]);
+				[el1, el2, elP].forEach((el) => el.classList.add("opacity-100"));
+
+				function swap() {
+					const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+					if (reduce) {
+						i = (i + 1) % slides.length;
+						setSlide(slides[i]);
+						return;
+					}
+
+					// fade out + pequeño slide
+					[el1, el2, elP].forEach((el) =>
+						el.classList.add("opacity-0", "translate-y-2")
+					);
+
+					setTimeout(() => {
+						i = (i + 1) % slides.length;
+						setSlide(slides[i]);
+
+						// fade in
+						[el1, el2, elP].forEach((el) => {
+							el.classList.remove("translate-y-2");
+							el.classList.replace("opacity-0", "opacity-100");
+						});
+					}, 220);
+				}
+
+				setInterval(swap, INTERVALO_MS);
+			})();
 		</script>
 	</body>
 </html>
